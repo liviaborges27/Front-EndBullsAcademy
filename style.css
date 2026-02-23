@@ -1,0 +1,53 @@
+/* ... manter o CSS anterior e adicionar ... */
+
+.hidden { display: none; }
+
+.back-btn {
+    background: var(--primary-red);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.back-btn:hover { background: var(--primary-orange); }
+
+/* Estilo do Cronograma */
+.timeline-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.timeline-table th, .timeline-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.timeline-table th {
+    background: var(--primary-red);
+    color: white;
+}
+
+.status-done { color: #00ff00; font-weight: bold; }
+.status-waiting { color: var(--primary-orange); font-weight: bold; }
+
+/* Container do Gráfico */
+.chart-container {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+canvas { max-height: 400px; }

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulls Academy | Steel Bulls #9460</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --primary-red: #cc0000;
+            --primary-orange: #ff4500;
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --text-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Fundo com imagem e overlay escuro */
+        .background-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(204,0,0,0.2) 100%), 
+                        url('fundo.jpg'); 
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--primary-red);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .main-logo { height: 60px; }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav a.active { color: var(--primary-orange); }
+
+        .content {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            border-left: 6px solid var(--primary-red);
+            padding-left: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Grid de Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 40px 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-orange);
+            background: rgba(255, 69, 0, 0.15);
+            box-shadow: 0 10px 30px rgba(204, 0, 0, 0.3);
+        }
+
+        .icon { font-size: 3.5rem; margin-bottom: 20px; }
+        .red { color: var(--primary-red); }
+        .orange { color: var(--primary-orange); }
+
+        /* Estilos de Detalhes (Escondidos por padrão) */
+        .hidden { display: none; }
+        
+        .back-btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 30px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover { background: var(--primary-orange); }
+
+        .timeline-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .timeline-table th { background: var(--primary-red); padding: 15px; text-align: left; }
+        .timeline-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+        .chart-container {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-red);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-overlay"></div>
+    
+    <header>
+        <div class="nav-container">
+            <div class="logo-area" onclick="showHome()">
+                <img src="logo.png" alt="Steel Bulls" class="main-logo">
+                <span>BULLS ACADEMY</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Módulos</a></li>
+                    <li><a href="#">Equipe</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content">
+        <div id="home-view">
+            <h2 class="category-title">Módulos de Treinamento</h2>
+            <div class="grid">
+                <div class="card" onclick="openDetails('mecanica')">
+                    <i class="fas fa-tools icon red"></i>
+                    <h3>MECÂNICA E MONTAGEM</h3>
+                    <p>Cronograma de chassis e sub-sistemas</p>
+                </div>
+                <div class="card" onclick="openDetails('programacao')">
+                    <i class="fas fa-code icon orange"></i>
+                    <h3>PROGRAMAÇÃO E BULLS AI</h3>
+                    <p>Lógica, Java e Inteligência Artificial</p>
+                </div>
+                <div class="card" onclick="openDetails('desempenho')">
+                    <i class="fas fa-chart-line icon red"></i>
+                    <h3>MEU DESEMPENHO</h3>
+                    <p>Gráficos de evolução da equipe</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="details-view" class="hidden">
+            <button class="back-btn" onclick="showHome()">
+                <i class="fas fa-arrow-left"></i> VOLTAR PARA HOME
+            </button>
+            <div id="dynamic-content"></div>
+        </div>
+    </main>
+
+    <script>
+        function showHome() {
+            document.getElementById('home-view').classList.remove('hidden');
+            document.getElementById('details-view').classList.add('hidden');
+        }
+
+        function openDetails(type) {
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('details-view').classList.remove('hidden');
+            
+            const content = document.getElementById('dynamic-content');
+
+            if (type === 'mecanica') {
+                content.innerHTML = `
+                    <h2 class="category-title">Cronograma de Mecânica</h2>
+                    <table class="timeline-table">
+                        <tr><th>Fase</th><th>Atividade</th><th>Status</th></tr>
+                        <tr><td>Semana 1</td><td>Montagem do Chassis (MinoTauro)</td><td style="color:#00ff00">Concluído</td></tr>
+                        <tr><td>Semana 2</td><td>Sistema de Elevação e Intake</td><td style="color:orange">Em execução</td></tr>
+                        <tr><td>Semana 3</td><td>Integração Elétrica</td><td style="color:#aaa">Aguardando</td></tr>
+                    </table>
+                `;
+            } else if (type === 'programacao') {
+                content.innerHTML = `
+                    <h2 class="category-title">Módulo Bulls AI</h2>
+                    <p style="margin-bottom:20px">Treinamento avançado de visão computacional e lógica autônoma.</p>
+                    <table class="timeline-table">
+                        <tr><th>Módulo</th><th>Tema</th><th>Acesso</th></tr>
+                        <tr><td>01</td><td>Introdução à WPILib</td><td><button class="back-btn" style="padding:5px 15px">Assistir</button></td></tr>
+                        <tr><td>02</td><td>Bulls AI: Detecção de Objetos</td><td><button class="back-btn" style="padding:5px 15px">Assistir</button></td></tr>
+                    </table>
+                `;
+            } else if (type === 'desempenho') {
+                content.innerHTML = `
+                    <h2 class="category-title">Evolução Técnica da Temporada</h2>
+                    <div class="chart-container">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                `;
+                renderChart();
+            }
+        }
+
+        function renderChart() {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr'],
+                    datasets: [{
+                        label: 'Eficiência de Treinamento (%)',
+                        data: [20, 50, 85, 95],
+                        borderColor: '#ff4500',
+                        backgroundColor: 'rgba(255, 69, 0, 0.2)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: '#fff' } },
+                        x: { ticks: { color: '#fff' } }
+                    },
+                    plugins: { legend: { labels: { color: '#fff' } } }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
